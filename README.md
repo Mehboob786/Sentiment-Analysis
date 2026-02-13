@@ -96,9 +96,9 @@ Expected terminal output (shape counts may vary only if dataset changes):
 
 ```text
 Saved:
-- data/train.csv (... rows)
-- data/val.csv (... rows)
-- data/test.csv (... rows)
+- data/train.csv (45615 rows)
+- data/val.csv (2000 rows)
+- data/test.csv (12284 rows)
 ```
 
 ## 7. Model Training and Evaluation
@@ -298,17 +298,17 @@ If you run commands from another directory, switch back to project root first.
 3. Add profanity/frustration detection layer
 4. Add a small custom labeled customer-support dataset and compare metrics before/after fine-tuning
 
-## 17. Results Template (Fill After Training)
+## 17. Results (Current Run)
 
-Use this section directly in your project report or submission README.
+Values below are from the current local run of `python src/train.py` on February 13, 2026.
 
 ### 17.1 Dataset Summary
 
 | Split | Rows | Source |
 |---|---:|---|
-| Train | `...` | `cardiffnlp/tweet_eval` |
-| Validation | `...` | `cardiffnlp/tweet_eval` |
-| Test | `...` | `cardiffnlp/tweet_eval` |
+| Train | `45,615` | `cardiffnlp/tweet_eval` |
+| Validation | `2,000` | `cardiffnlp/tweet_eval` |
+| Test | `12,284` | `cardiffnlp/tweet_eval` |
 
 ### 17.2 Model Configuration
 
@@ -322,35 +322,35 @@ Use this section directly in your project report or submission README.
 
 | Metric | Score |
 |---|---:|
-| Accuracy | `...` |
-| Macro Precision | `...` |
-| Macro Recall | `...` |
-| Macro F1 | `...` |
+| Accuracy | `0.6620` |
+| Macro Precision | `0.6339` |
+| Macro Recall | `0.6632` |
+| Macro F1 | `0.6415` |
 
 Per-class (validation):
 
 | Class | Precision | Recall | F1-score | Support |
 |---|---:|---:|---:|---:|
-| Negative | `...` | `...` | `...` | `...` |
-| Neutral | `...` | `...` | `...` | `...` |
-| Positive | `...` | `...` | `...` | `...` |
+| Negative | `0.4600` | `0.6635` | `0.5433` | `312` |
+| Neutral | `0.6889` | `0.6191` | `0.6521` | `869` |
+| Positive | `0.7529` | `0.7070` | `0.7292` | `819` |
 
 ### 17.4 Test Metrics
 
 | Metric | Score |
 |---|---:|
-| Accuracy | `...` |
-| Macro Precision | `...` |
-| Macro Recall | `...` |
-| Macro F1 | `...` |
+| Accuracy | `0.5957` |
+| Macro Precision | `0.5883` |
+| Macro Recall | `0.6020` |
+| Macro F1 | `0.5924` |
 
 Per-class (test):
 
 | Class | Precision | Recall | F1-score | Support |
 |---|---:|---:|---:|---:|
-| Negative | `...` | `...` | `...` | `...` |
-| Neutral | `...` | `...` | `...` | `...` |
-| Positive | `...` | `...` | `...` | `...` |
+| Negative | `0.5598` | `0.6589` | `0.6053` | `3,972` |
+| Neutral | `0.6477` | `0.5550` | `0.5978` | `5,937` |
+| Positive | `0.5575` | `0.5920` | `0.5742` | `2,375` |
 
 ### 17.5 Confusion Matrix
 
@@ -359,35 +359,29 @@ Label order used in code: `negative`, `neutral`, `positive`.
 Validation confusion matrix:
 
 ```text
-[[..., ..., ...],
- [..., ..., ...],
- [..., ..., ...]]
+[[207, 74, 31],
+ [172, 538, 159],
+ [71, 169, 579]]
 ```
 
 Test confusion matrix:
 
 ```text
-[[..., ..., ...],
- [..., ..., ...],
- [..., ..., ...]]
+[[2617, 1112, 243],
+ [1769, 3295, 873],
+ [289, 680, 1406]]
 ```
 
 ### 17.6 Error Analysis (Short)
 
-- Common false positives: `...`
-- Common false negatives: `...`
-- Hard examples (sarcasm, mixed sentiment, domain-specific jargon): `...`
-- Planned fix: `...`
+- Common false positives: negative text often predicted as neutral; neutral text often predicted as negative.
+- Common false negatives: positive class confusion with neutral and vice versa.
+- Hard examples: sarcasm, mixed-sentiment sentences, short context-poor messages.
+- Planned fix: fine-tune on customer-support-specific labeled data and add confidence-based fallback handling.
 
 ### 17.7 Example Chats
 
-| # | User Message | Predicted Sentiment | Confidence | Bot Response Quality |
-|---|---|---|---:|---|
-| 1 | `...` | `...` | `...` | Good / Partial / Poor |
-| 2 | `...` | `...` | `...` | Good / Partial / Poor |
-| 3 | `...` | `...` | `...` | Good / Partial / Poor |
-| 4 | `...` | `...` | `...` | Good / Partial / Poor |
-| 5 | `...` | `...` | `...` | Good / Partial / Poor |
+Use `python src/infer.py` or the Streamlit UI to generate live examples and record exact confidence scores for your report.
 
 ## 18. License
 
